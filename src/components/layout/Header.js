@@ -2,18 +2,25 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+export const Header = () => {
   return (
     <div>
       <Navbar expand="md" variant="dark" className="bg-dark">
         <Container>
-          <Navbar.Brand href="/">Footwear Ecommerce</Navbar.Brand>
+          <Link to="/" className="navbar-brand">
+            E-Store
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="/signin">Signin</Nav.Link>
-              <Nav.Link href="/new-admin">Signup</Nav.Link>
+            <Nav className="ms-auto">
+              <Link to="/" className="nav-link">
+                Sign In
+              </Link>
+              <Link to="/new-admin" className="nav-link">
+                Sign Up
+              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -21,5 +28,3 @@ const Header = () => {
     </div>
   );
 };
-
-export default Header;

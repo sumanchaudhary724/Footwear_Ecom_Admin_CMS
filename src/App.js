@@ -1,17 +1,17 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Signin from "./components/pages/signin-signup/Signin";
-import Signup from "./components/pages/signin-signup/Signup";
+import SignIn from "./pages/signin-signup/SignIn";
+import SignUp from "./pages/signin-signup/SignUp";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Signin />} />
+        <Route path="/" element={<SignIn />} />
 
         {/*private router */}
-        <Route path="/new-admin" element={<Signup />} />
+        <Route path="/new-admin" element={<SignUp />} />
       </Routes>
       <ToastContainer />
     </div>

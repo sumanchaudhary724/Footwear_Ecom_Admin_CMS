@@ -1,67 +1,76 @@
 import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import CustomInput from "../../custom-input/CustomInput";
+import { Button, Form } from "react-bootstrap";
+import { CustomInput } from "../custom-input/CustomInput";
 
-const AdminSignup = () => {
+export const AdminSignup = () => {
   const [form, setForm] = useState({});
 
-  const handleOnSubmit = () => {};
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleOnChange = () => {};
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(form);
+  };
 
   const inputs = [
     {
       label: "First Name",
       name: "fName",
       required: true,
-      placeholder: "Sam",
       type: "text",
+      placeholder: "First name",
     },
     {
       label: "Last Name",
       name: "lName",
       required: true,
-      placeholder: "smith",
       type: "text",
+      placeholder: "Last name",
     },
     {
-      label: "Phone ",
+      label: "Phone",
       name: "phone",
-
-      placeholder: "04123456",
       type: "number",
+      placeholder: "Phone",
     },
     {
       label: "Address",
       name: "address",
-
-      placeholder: "222 george st Sydeny",
       type: "text",
+      placeholder: "Address",
     },
     {
       label: "Email",
       name: "email",
       required: true,
-      placeholder: "Sam@smit.com",
-      type: "email",
+      type: "text",
+      placeholder: "Email",
     },
     {
       label: "Password",
       name: "password",
       required: true,
-      placeholder: "******",
       type: "password",
-      minLength: "6",
+      placeholder: "Password",
     },
+
     {
       label: "Confirm Password",
       name: "confirmPassword",
       required: true,
-      placeholder: "******",
       type: "password",
-      minLength: "6",
+      placeholder: "Confirm Password",
     },
   ];
+
   return (
     <div>
       <Form
@@ -69,13 +78,18 @@ const AdminSignup = () => {
         style={{ width: "450px" }}
         className="m-auto border p-4 shadow-lg mt-5 rounded"
       >
-        <h3>Add New Admin</h3>
-        {inputs.map((item, i) => {
-          <CustomInput key={i} {...item} onChange={onChange} />;
-        })}
+        <h3>Add New Adming</h3>
+        <hr />
+        {inputs.map((itm, i) => (
+          <CustomInput key={i} {...itm} onChange={handleOnChange} />
+        ))}
+
+        <div className="d-grid mt-5">
+          <Button variant="dark" type="submit">
+            Submit New Admin
+          </Button>
+        </div>
       </Form>
     </div>
   );
 };
-
-export default AdminSignup;
