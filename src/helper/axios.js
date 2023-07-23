@@ -20,8 +20,8 @@ const axiosProcessor = async ({ method, url, obj }) => {
   }
 };
 
-// create user
-export const postNewAdmin = async (data) => {
+// ========= admin api
+export const postNewAdmin = (data) => {
   const obj = {
     method: "post",
     url: adminAPI,
@@ -29,12 +29,11 @@ export const postNewAdmin = async (data) => {
   };
   return axiosProcessor(obj);
 };
-
-export const verifyAccount = async (object) => {
+export const postNewAdminVerificationInfo = (data) => {
   const obj = {
-    method: "put",
-    url: adminAPI + "/verify",
-    obj: object,
+    method: "post",
+    url: adminAPI + "/admin-verification",
+    obj: data,
   };
   return axiosProcessor(obj);
 };
