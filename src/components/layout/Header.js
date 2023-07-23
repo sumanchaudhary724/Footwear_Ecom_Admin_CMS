@@ -15,6 +15,9 @@ export const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
+              <Link to="/dashboard" className="nav-link">
+                Dashboard
+              </Link>
               <Link to="/" className="nav-link">
                 Sign In
               </Link>
