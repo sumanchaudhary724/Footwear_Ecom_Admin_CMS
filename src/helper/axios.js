@@ -31,6 +31,15 @@ export const postNewAdmin = (data) => {
   return axiosProcessor(obj);
 };
 
+export const signInAdmin = (data) => {
+  const obj = {
+    method: "post",
+    url: adminAPI + "/sign-in",
+    obj: data,
+  };
+  return axiosProcessor(obj);
+};
+
 export const postNewAdminVerificationInfo = (data) => {
   const obj = {
     method: "post",
