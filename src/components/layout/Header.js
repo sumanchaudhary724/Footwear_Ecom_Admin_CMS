@@ -21,6 +21,9 @@ export const Header = () => {
               <Link to="/" className="nav-link">
                 Sign In
               </Link>
+              <Link to="/" className="nav-link">
+                Sign Out
+              </Link>
               <Link to="/new-admin" className="nav-link">
                 Sign Up
               </Link>

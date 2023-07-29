@@ -12,8 +12,15 @@ import { Order } from "./pages/order/Order";
 import { AdminUser } from "./pages/admin-user/AdminUser";
 import { Customer } from "./pages/customer/Customer";
 import { Profile } from "./pages/profile/Profile";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getCatsAction } from "./pages/category/categoryAction";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCatsAction());
+  }, [dispatch]);
   return (
     <div className="App">
       <Routes>
