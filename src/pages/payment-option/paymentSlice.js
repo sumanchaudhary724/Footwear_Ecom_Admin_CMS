@@ -1,23 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  payments: [],
+  paymentOptions: [],
 };
-const paymentSlice = createSlice({
-  name: "payments",
+const paymentOptionsSlice = createSlice({
+  name: "paymentOptions",
   initialState,
   reducers: {
-    setPayments: (state, { payload }) => {
-      if (state.payments.length === 0 && payload.length === 0) {
+    setPaymentOptions: (state, { payload }) => {
+      if (
+        state.paymentOptions?.length === 0 &&
+        payload?.length === 0 &&
+        payload === undefined
+      ) {
         return;
       }
-      state.payments = payload;
+
+      state.paymentOptions = payload;
     },
   },
 });
 
-const { reducer, actions } = paymentSlice;
+const { reducer, actions } = paymentOptionsSlice;
 
-export const { setPayments } = actions;
+export const { setPaymentOptions } = actions;
 
 export default reducer;

@@ -3,13 +3,28 @@ import axios from "axios";
 const rootAPI = process.env.REACT_APP_ROOTAPI;
 const adminAPI = rootAPI + "/admin";
 const catAPI = rootAPI + "/category";
-const paymentAPI = rootAPI + "/payment";
+const paymentOptAPI = rootAPI + "/payment-option";
+const jwtAPI = rootAPI + "/get-new-access-jwt";
 
 const getAccessJWT = () => {
   return sessionStorage.getItem("accessJWT");
 };
 const getRefreshJWT = () => {
   return localStorage.getItem("refreshJWT");
+};
+
+// Assuming this function retrieves a new access JWT
+const getNewAccessJWT = async () => {
+  try {
+    // Make an API call or perform any other operation to get the new access JWT
+    // For example:
+    const response = await axios.post(jwtAPI);
+    const { status, accessJWT } = response.data;
+    return { status, accessJWT };
+  } catch (error) {
+    console.error("Error getting new access JWT:", error);
+    return { status: "error", accessJWT: null };
+  }
 };
 
 const axiosProcessor = async ({
@@ -34,6 +49,20 @@ const axiosProcessor = async ({
 
     return data;
   } catch (error) {
+    if (
+      error?.response?.status === 403 &&
+      error?.response?.data?.message === "jwt expired"
+    ) {
+      //1. get new accessJWt
+      const { status, accessJWT } = await getNewAccessJWT();
+      if (status === "success" && accessJWT) {
+        sessionStorage.setItem("accessJWT", accessJWT);
+      }
+
+      //2. continue the request
+
+      return axiosProcessor({ method, url, obj, isPrivate, refreshToken });
+    }
     return {
       status: "error",
       message: error.response ? error?.response?.data?.message : error.message,
@@ -81,7 +110,6 @@ export const postNewCategory = (data) => {
     method: "post",
     url: catAPI,
     obj: data,
-    isPrivate: true,
   };
   return axiosProcessor(obj);
 };
@@ -139,34 +167,36 @@ export const logoutAdmin = (_id) => {
 export const postNewPayment = (data) => {
   const obj = {
     method: "post",
-    url: paymentAPI,
+    url: paymentOptAPI,
     obj: data,
     isPrivate: true,
   };
   return axiosProcessor(obj);
 };
-export const getPayments = () => {
+export const getNewPaymentOPts = () => {
   const obj = {
     method: "get",
-    url: paymentAPI,
+    url: paymentOptAPI,
     isPrivate: true,
   };
   return axiosProcessor(obj);
 };
 
-export const updatePayment = (data) => {
+export const updatePaymentOpts = (data) => {
   const obj = {
     method: "put",
-    url: paymentAPI,
+    url: paymentOptAPI,
+    isPrivate: true,
     obj: data,
   };
   return axiosProcessor(obj);
 };
 
-export const deletePayment = (_id) => {
+export const deletePaymentOpts = (_id) => {
   const obj = {
     method: "delete",
-    url: paymentAPI + "/" + _id,
+    url: paymentOptAPI + "/" + _id,
+    isPrivate: true,
   };
   return axiosProcessor(obj);
 };

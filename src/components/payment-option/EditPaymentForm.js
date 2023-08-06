@@ -3,8 +3,8 @@ import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import {
-  deletePaymentAction,
-  updatePaymentAction,
+  deletePaymentOptAction,
+  updatePaymentOptAction,
 } from "../../pages/payment-option/paymentAction";
 
 export const EditPaymentForm = ({ payment }) => {
@@ -20,7 +20,7 @@ export const EditPaymentForm = ({ payment }) => {
     e.preventDefault();
     const { _id, title, status } = form;
 
-    dispatch(updatePaymentAction({ _id, title, status }));
+    dispatch(updatePaymentOptAction({ _id, title, status }));
   };
 
   const handleOnChange = (e) => {
@@ -38,7 +38,7 @@ export const EditPaymentForm = ({ payment }) => {
 
   const handleOnDelete = () => {
     if (window.confirm("Are you sure you wnat to delete this payment option")) {
-      dispatch(deletePaymentAction(payment._id));
+      dispatch(deletePaymentOptAction(payment._id));
     }
   };
 

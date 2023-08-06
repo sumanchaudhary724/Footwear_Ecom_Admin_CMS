@@ -1,32 +1,29 @@
 import { toast } from "react-toastify";
 import {
-  deletePayment,
-  getPayments,
+  getNewPaymentOPts,
   postNewPayment,
-  updatePayment,
+  updatePaymentOpts,
+  deletePaymentOpts,
 } from "../../helper/axios";
-import { setPayments } from "./paymentSlice.js";
+import { setPaymentOptions } from "./paymentSlice.js";
+import { setModalShow } from "../../system/systemSlice";
 
-export const postNewPaymentAction = (obj) => async (dispatch) => {
-  const { status, message } = await postNewPayment(obj);
+export const postNewPaymentAction = (data) => async (dispatch) => {
+  const { status, message } = await postNewPayment(data);
 
   toast[status](message);
 
-  if (status === "success") {
-    //call the api to fetch all the cats and mount in the state
-    dispatch(getPaymentAction());
-  }
+  status === "success" && dispatch(getPaymentAction());
 };
+
 export const getPaymentAction = () => async (dispatch) => {
-  const { status, result } = await getPayments();
+  const { status, result } = await getNewPaymentOPts();
 
-  if (status === "success") {
-    // mount in the state
-    dispatch(setPayments(result));
-  }
+  status === "success" && dispatch(setPaymentOptions(result));
 };
-export const updatePaymentAction = (obj) => async (dispatch) => {
-  const respPending = updatePayment(obj);
+
+export const updatePaymentOptAction = (data) => async (dispatch) => {
+  const respPending = updatePaymentOpts(data);
   toast.promise(respPending, {
     pending: "please wait....",
   });
@@ -35,23 +32,19 @@ export const updatePaymentAction = (obj) => async (dispatch) => {
 
   toast[status](message);
 
-  if (status === "success") {
-    //call the api to fetch all the cats and mount in the state
-    dispatch(getPaymentAction());
-  }
+  status === "success" && dispatch(getPaymentAction());
 };
-export const deletePaymentAction = (_id) => async (dispatch) => {
-  const respPending = deletePayment(_id);
-  toast.promise(respPending, {
+
+export const deletePaymentOptAction = (_id) => async (dispatch) => {
+  const pending = deletePaymentOpts(_id);
+  toast.promise(pending, {
     pending: "please wait....",
   });
 
-  const { status, message } = await respPending;
+  const { status, message } = await pending;
 
   toast[status](message);
 
-  if (status === "success") {
-    //call the api to fetch all the cats and mount in the state
-    dispatch(getPaymentAction());
-  }
+  status === "success" && dispatch(getPaymentAction());
+  dispatch(setModalShow(false));
 };
