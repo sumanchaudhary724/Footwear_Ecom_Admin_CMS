@@ -3,6 +3,7 @@ import axios from "axios";
 const rootAPI = process.env.REACT_APP_ROOTAPI;
 const adminAPI = rootAPI + "/admin";
 const catAPI = rootAPI + "/category";
+const paymentAPI = rootAPI + "/payment";
 
 const getAccessJWT = () => {
   return sessionStorage.getItem("accessJWT");
@@ -19,6 +20,7 @@ const axiosProcessor = async ({
   refreshToken,
 }) => {
   const token = refreshToken ? getRefreshJWT() : getAccessJWT();
+
   const headers = {
     Authorization: isPrivate ? token : null,
   };
@@ -48,8 +50,6 @@ export const getAdminInfo = () => {
   };
   return axiosProcessor(obj);
 };
-
-// ========= admin api
 export const postNewAdmin = (data) => {
   const obj = {
     method: "post",
@@ -58,7 +58,6 @@ export const postNewAdmin = (data) => {
   };
   return axiosProcessor(obj);
 };
-
 export const signInAdmin = (data) => {
   const obj = {
     method: "post",
@@ -67,7 +66,6 @@ export const signInAdmin = (data) => {
   };
   return axiosProcessor(obj);
 };
-
 export const postNewAdminVerificationInfo = (data) => {
   const obj = {
     method: "post",
@@ -77,16 +75,16 @@ export const postNewAdminVerificationInfo = (data) => {
   return axiosProcessor(obj);
 };
 
-// ========= Category api
+// ========= category api
 export const postNewCategory = (data) => {
   const obj = {
     method: "post",
     url: catAPI,
     obj: data,
+    isPrivate: true,
   };
   return axiosProcessor(obj);
 };
-
 export const getCategories = () => {
   const obj = {
     method: "get",
@@ -133,6 +131,42 @@ export const logoutAdmin = (_id) => {
       accessJWT: getAccessJWT(),
       refreshJWT: getRefreshJWT(),
     },
+  };
+  return axiosProcessor(obj);
+};
+
+// ========= payment api
+export const postNewPayment = (data) => {
+  const obj = {
+    method: "post",
+    url: paymentAPI,
+    obj: data,
+    isPrivate: true,
+  };
+  return axiosProcessor(obj);
+};
+export const getPayments = () => {
+  const obj = {
+    method: "get",
+    url: paymentAPI,
+    isPrivate: true,
+  };
+  return axiosProcessor(obj);
+};
+
+export const updatePayment = (data) => {
+  const obj = {
+    method: "put",
+    url: paymentAPI,
+    obj: data,
+  };
+  return axiosProcessor(obj);
+};
+
+export const deletePayment = (_id) => {
+  const obj = {
+    method: "delete",
+    url: paymentAPI + "/" + _id,
   };
   return axiosProcessor(obj);
 };
