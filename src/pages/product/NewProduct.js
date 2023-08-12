@@ -13,6 +13,7 @@ const initialState = {
 
 const NewProduct = () => {
   const dispatch = useDispatch();
+  const [imgs, setImgs] = useState();
   const [form, setForm] = useState(initialState);
   const inputs = [
     {
@@ -83,8 +84,21 @@ const NewProduct = () => {
     });
   };
 
+  const handleOnImageAttached = (e) => {
+    const { files } = e.target;
+    setImgs(files);
+  };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
+    const formDt = new FormData();
+    //set all from data in FormData
+
+    for (let key in form) {
+      formDt.append(key, form[key]);
+    }
+    console.log(formDt);
 
     dispatch(postNewProductAction(form));
   };
