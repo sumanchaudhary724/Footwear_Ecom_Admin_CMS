@@ -6,7 +6,7 @@ import SignUp from "./pages/signin-signup/SignUp";
 import AdminVerification from "./pages/signin-signup/AdminVerification";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Category } from "./pages/category/Category";
-import { Product } from "./pages/product/Product";
+import Product from "./pages/product/Product";
 import PaymentOption from "./pages/payment-option/PaymentOption";
 import { Order } from "./pages/order/Order";
 import { AdminUser } from "./pages/admin-user/AdminUser";
@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCatsAction } from "./pages/category/categoryAction";
 import { PrivateRoute } from "./components/private/PrivateRoute";
+import NewProduct from "./pages/product/NewProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,15 @@ function App() {
           element={
             <PrivateRoute>
               <Product />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="new-product"
+          element={
+            <PrivateRoute>
+              <NewProduct />
             </PrivateRoute>
           }
         />

@@ -1,75 +1,57 @@
-import { Button, Form } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
+import { useEffect } from "react";
+import { Table, Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { CustomModal } from "../customModal/customModal.js";
-import { setModalShow } from "../../system/systemSlice";
-import { getCatsAction } from "../../pages/category/categoryAction";
+import {
+  deleteProductAction,
+  getProductsAction,
+} from "../../pages/product/productAction";
 
 export const ProductTable = () => {
   const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.productInfo);
 
-  const { cats } = useSelector((state) => state.catInfo);
   useEffect(() => {
-    dispatch(getCatsAction());
+    dispatch(getProductsAction());
   }, [dispatch]);
 
-  const handleOnEdit = (obj) => {
-    setSelectedCat(obj);
-    dispatch(setModalShow(true));
-  };
   return (
-    <>
-      <CustomModal title="Edit Category"></CustomModal>
-      <div className="d-flex justify-content-between mt-5">
-        <div>30 Categories Found</div>
+    <div className="mt-5">
+      <div className="d-flex justify-content-between mb-3">
+        <div>{products.length} Products found</div>
         <div>
-          <Form.Control placeholder="Serach by name ..." />
+          <Form.Control type="text" placeholder="search by product name ..." />
         </div>
       </div>
-      <Table striped bordered hover className="mt-2 ">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
-            <th>Status</th>
-            <th>Title</th>
-            <th>Slug</th>
-            <th>Added At</th>
+            <th>Thumbnail</th>
+            <th>Name</th>
+            <th>QTY</th>
             <th>Edit</th>
           </tr>
         </thead>
         <tbody>
-          {cats.map(({ _id, status, title, slug, createdAt }, i) => (
-            <tr key={_id}>
+          {products.map((item, i) => (
+            <tr key={item._id}>
               <td>{i + 1}</td>
+              <td>no img</td>
+              <td>{item.name}</td>
+              <td>{item.qty}</td>
               <td>
-                <span
-                  className={
-                    status === "active"
-                      ? "bg-success p-2 rounded"
-                      : "bg-danger p-2 rounded"
-                  }
-                >
-                  {status}
-                </span>
-              </td>
-              <td> {title}</td>
-              <td>{slug}</td>
-              <td>{createdAt.slice(0, 10)}</td>
-              <td>
+                <Button variant="warning">Edit</Button>
                 <Button
                   variant="danger"
-                  onClick={() =>
-                    handleOnEdit({ _id, status, title, slug, createdAt })
-                  }
+                  onClick={() => dispatch(deleteProductAction(item._id))}
                 >
-                  Edit
+                  Delete
                 </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 };

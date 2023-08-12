@@ -1,46 +1,53 @@
 import React, { useState } from "react";
-import { AdminLayout } from "../layout/AdminLayout";
-import { Button, ButtonGroup, Form } from "react-bootstrap";
-import { CustomeInput } from "../customeInput/CustomeInput";
+import { AdminLayout } from "../../components/layout/AdminLayout";
+import { Form, Button } from "react-bootstrap";
+import { CustomInput } from "../../components/custom-input/CustomInput";
+import { useDispatch } from "react-redux";
+import { postNewProductAction } from "./productAction";
+import { Link } from "react-router-dom";
+import { SelectCategory } from "../../components/category/SelectCategory";
+
 const initialState = {
   status: "inactive",
 };
-export const NewProduct = () => {
+
+const NewProduct = () => {
+  const dispatch = useDispatch();
   const [form, setForm] = useState(initialState);
   const inputs = [
     {
       name: "name",
       label: "Name",
       type: "text",
-      placeholder: "Denim Pants",
+      placeholder: "Samsung T.V.",
       required: true,
     },
     {
       name: "sku",
       label: "SKU",
       type: "text",
-      placeholder: "DENIM-TV-30",
+      placeholder: "SAM-TV-8",
       required: true,
     },
     {
       name: "qty",
-      label: "QUANTITY",
+      label: "QTY",
       type: "number",
       placeholder: "50",
       required: true,
     },
     {
       name: "price",
-      label: "Price",
+      label: "PRICE",
       type: "number",
-      placeholder: "$ 3000",
+      placeholder: "1000",
       required: true,
     },
     {
       name: "salesPrice",
       label: "Sales Price",
       type: "number",
-      placeholder: "$ 3000",
+      placeholder: "800",
     },
     {
       name: "salesStartDate",
@@ -57,23 +64,37 @@ export const NewProduct = () => {
       label: "Description",
       type: "text",
       as: "textarea",
-      placeholder: "Product Description",
+      placeholder: "product description ...",
+      rows: "10",
       required: true,
     },
   ];
+
   const handleOnChange = (e) => {
     let { checked, name, value } = e.target;
+    console.log(name, checked);
+
     if (name === "status") {
       value = checked ? "active" : "inactive";
     }
-    setForm({ ...form, [name]: value });
+    setForm({
+      ...form,
+      [name]: value,
+    });
   };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
+    dispatch(postNewProductAction(form));
   };
+
   return (
-    <AdminLayout>
-      <div>
+    <AdminLayout title="New Product">
+      <Link to="/product">
+        <Button variant="secondary">&lt; Back</Button>
+      </Link>
+      <div className="mt-4">
         <Form onSubmit={handleOnSubmit}>
           <Form.Group className="mb-3">
             <Form.Check
@@ -81,18 +102,29 @@ export const NewProduct = () => {
               type="switch"
               label="Status"
               onChange={handleOnChange}
-            ></Form.Check>
+            />
           </Form.Group>
-          {inputs.map((item, index) => (
-            <CustomeInput key={index} {...item} onChange={handleOnChange} />
+
+          <SelectCategory
+            onChange={handleOnChange}
+            name="parentCat"
+            required={true}
+          />
+          {inputs.map((item, i) => (
+            <CustomInput key={i} {...item} onChange={handleOnChange} />
           ))}
-          <div className="d-grid newProduct">
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>{" "}
+          <Form.Group className="mb -3 mt-3">
+            <Form.Control></Form.Control>
+          </Form.Group>
+          <div className="d-grid mt-3 mb-3">
+            <Button variant="success" type="submit">
+              Add Product
+            </Button>
           </div>
         </Form>
       </div>
     </AdminLayout>
   );
 };
+
+export default NewProduct;
