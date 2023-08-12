@@ -1,13 +1,16 @@
 import React from "react";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { NewPaymentForm } from "../../components/payment-option/NewPaymentForm";
-import { PaymentOptionTable } from "../../components/payment-option/PaymentTable";
+import { NewPaymentOption } from "../../components/payment-option/NewPaymentOption";
+import { PaymentOptionTable } from "../../components/payment-option/PaymentOptionTable";
 
-export const PaymentOption = () => {
+const PaymentOption = () => {
   return (
     <AdminLayout title="Payment Option">
-      <NewPaymentForm />
+      <NewPaymentOption />
+
       <PaymentOptionTable />
     </AdminLayout>
   );
 };
+
+export default PaymentOption;

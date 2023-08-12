@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { useDispatch } from "react-redux";
 import { CustomInput } from "../custom-input/CustomInput";
-import { postNewPaymentAction } from "../../pages/payment-option/paymentAction";
+import { addNewPOAction } from "../../pages/payment-option/poAction";
 
 const initalState = {
   status: "",
@@ -13,7 +13,7 @@ const initalState = {
   description: "",
 };
 
-export const NewPaymentForm = () => {
+export const NewPaymentOption = () => {
   const dispatch = useDispatch();
   const [form, setForm] = useState(initalState);
 
@@ -29,7 +29,7 @@ export const NewPaymentForm = () => {
   const handleOnSubmmit = (e) => {
     e.preventDefault();
 
-    dispatch(postNewPaymentAction(form));
+    dispatch(addNewPOAction(form));
 
     setForm(initalState);
   };

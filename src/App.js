@@ -7,7 +7,7 @@ import AdminVerification from "./pages/signin-signup/AdminVerification";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Category } from "./pages/category/Category";
 import { Product } from "./pages/product/Product";
-import { PaymentOption } from "./pages/payment-option/PaymentOption";
+import PaymentOption from "./pages/payment-option/PaymentOption";
 import { Order } from "./pages/order/Order";
 import { AdminUser } from "./pages/admin-user/AdminUser";
 import { Customer } from "./pages/customer/Customer";

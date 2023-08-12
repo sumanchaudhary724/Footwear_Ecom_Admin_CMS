@@ -3,7 +3,7 @@ import axios from "axios";
 const rootAPI = process.env.REACT_APP_ROOTAPI;
 const adminAPI = rootAPI + "/admin";
 const catAPI = rootAPI + "/category";
-const paymentOptAPI = rootAPI + "/payment-option";
+const poAPI = rootAPI + "/payment-option";
 const jwtAPI = rootAPI + "/get-new-access-jwt";
 
 const getAccessJWT = () => {
@@ -163,39 +163,41 @@ export const logoutAdmin = (_id) => {
   return axiosProcessor(obj);
 };
 
-// ========= payment api
-export const postNewPayment = (data) => {
+// ========== Payment Option
+
+export const postNewPO = (data) => {
   const obj = {
     method: "post",
-    url: paymentOptAPI,
+    url: poAPI,
     obj: data,
     isPrivate: true,
   };
   return axiosProcessor(obj);
 };
-export const getNewPaymentOPts = () => {
+
+export const getNewPOs = () => {
   const obj = {
     method: "get",
-    url: paymentOptAPI,
+    url: poAPI,
     isPrivate: true,
   };
   return axiosProcessor(obj);
 };
 
-export const updatePaymentOpts = (data) => {
+export const updateNewPOs = (data) => {
   const obj = {
     method: "put",
-    url: paymentOptAPI,
+    url: poAPI,
     isPrivate: true,
     obj: data,
   };
   return axiosProcessor(obj);
 };
 
-export const deletePaymentOpts = (_id) => {
+export const deletePO = (_id) => {
   const obj = {
     method: "delete",
-    url: paymentOptAPI + "/" + _id,
+    url: poAPI + "/" + _id,
     isPrivate: true,
   };
   return axiosProcessor(obj);

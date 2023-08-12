@@ -1,21 +1,22 @@
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { EditPaymentForm } from "./EditPaymentForm";
-import { useEffect, useState } from "react";
-import { CustomModal } from "../customModal/customModal.js";
+
+import { CustomModal } from "../customModal/customModal";
 import { setModalShow } from "../../system/systemSlice";
-import { getPaymentAction } from "../../pages/payment-option/paymentAction";
+import { getOPsAction } from "../../pages/payment-option/poAction";
+import { EditPaymentOption } from "./EditPaymentOption";
 
 export const PaymentOptionTable = () => {
   const dispatch = useDispatch();
 
   const [selectedPO, setSelectedPO] = useState({});
 
-  const { paymentOptions } = useSelector((state) => state.paymentInfo);
+  const { paymentOptions } = useSelector((state) => state.poInfo);
 
   useEffect(() => {
-    dispatch(getPaymentAction());
+    dispatch(getOPsAction());
   }, [dispatch]);
 
   const handleOnEdit = (obj) => {
@@ -25,7 +26,7 @@ export const PaymentOptionTable = () => {
   return (
     <>
       <CustomModal title="Edit Payment Option">
-        <EditPaymentForm po={selectedPO} />
+        <EditPaymentOption po={selectedPO} />
       </CustomModal>
       <div className="d-flex justify-content-between mt-5">
         <div>{paymentOptions?.length} Payment options Found</div>
