@@ -1,5 +1,10 @@
 import { toast } from "react-toastify";
-import { deleteProduct, getProducts, postNewProduct } from "../../helper/axios";
+import {
+  deleteProduct,
+  getProducts,
+  postNewProduct,
+  updateProduct,
+} from "../../helper/axios";
 import { setProducts } from "./productSlice";
 
 export const postNewProductAction = (data) => async (dispatch) => {
@@ -17,6 +22,25 @@ export const postNewProductAction = (data) => async (dispatch) => {
     /// fetch all the products
     dispatch(getProductsAction());
   }
+};
+
+export const updateProductAction = (data) => async (dispatch) => {
+  const pending = updateProduct(data);
+
+  toast.promise(pending, {
+    pending: "Please wait",
+  });
+
+  const { status, message } = await pending;
+
+  toast[status](message);
+
+  if (status === "success") {
+    /// fetch all the products
+    dispatch(getProductsAction());
+    return true;
+  }
+  return false;
 };
 
 export const getProductsAction = () => async (dispatch) => {
@@ -40,5 +64,7 @@ export const deleteProductAction = (_id) => async (dispatch) => {
 
   if (status === "success") {
     dispatch(getProductsAction());
+    return true;
   }
+  return false;
 };

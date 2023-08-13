@@ -13,8 +13,8 @@ const initialState = {
 
 const NewProduct = () => {
   const dispatch = useDispatch();
-  const [imgs, setImgs] = useState();
   const [form, setForm] = useState(initialState);
+  const [imgs, setImgs] = useState([]);
   const inputs = [
     {
       name: "name",
@@ -73,7 +73,6 @@ const NewProduct = () => {
 
   const handleOnChange = (e) => {
     let { checked, name, value } = e.target;
-    console.log(name, checked);
 
     if (name === "status") {
       value = checked ? "active" : "inactive";
@@ -84,23 +83,29 @@ const NewProduct = () => {
     });
   };
 
-  const handleOnImageAttached = (e) => {
+  const handleOnImageAtached = (e) => {
     const { files } = e.target;
+
     setImgs(files);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-
     const formDt = new FormData();
-    //set all from data in FormData
+    // set all from data in FormDate
 
     for (let key in form) {
       formDt.append(key, form[key]);
     }
-    console.log(formDt);
 
-    dispatch(postNewProductAction(form));
+    // check if there is any new image is being added
+    if (imgs.length) {
+      [...imgs].forEach((item) => {
+        formDt.append("images", item);
+      });
+    }
+
+    dispatch(postNewProductAction(formDt));
   };
 
   return (
@@ -127,8 +132,15 @@ const NewProduct = () => {
           {inputs.map((item, i) => (
             <CustomInput key={i} {...item} onChange={handleOnChange} />
           ))}
-          <Form.Group className="mb -3 mt-3">
-            <Form.Control></Form.Control>
+
+          <Form.Group className="mb-3 mt-3">
+            <Form.Control
+              type="file"
+              name="img"
+              multiple
+              onChange={handleOnImageAtached}
+              required={true}
+            />
           </Form.Group>
           <div className="d-grid mt-3 mb-3">
             <Button variant="success" type="submit">
