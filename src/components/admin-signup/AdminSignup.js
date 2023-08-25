@@ -20,10 +20,10 @@ export const AdminSignup = () => {
     e.preventDefault();
 
     const { confirmPassword, ...rest } = form;
+
     if (confirmPassword !== rest.password) {
       return toast.error("Password should match");
     }
-
     createNewAdminAction(rest);
   };
 
@@ -67,6 +67,7 @@ export const AdminSignup = () => {
       required: true,
       type: "password",
       placeholder: "Password",
+      minLength: "6",
     },
 
     {
@@ -85,7 +86,7 @@ export const AdminSignup = () => {
         style={{ width: "450px" }}
         className="m-auto border p-4 shadow-lg mt-5 rounded"
       >
-        <h3>Add New Admin</h3>
+        <h3>Add New Adming</h3>
         <hr />
         {inputs.map((itm, i) => (
           <CustomInput key={i} {...itm} onChange={handleOnChange} />

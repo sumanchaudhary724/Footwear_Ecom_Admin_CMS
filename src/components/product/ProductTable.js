@@ -5,6 +5,7 @@ import {
   deleteProductAction,
   getProductsAction,
 } from "../../pages/product/productAction";
+import { Link } from "react-router-dom";
 
 export const ProductTable = () => {
   const dispatch = useDispatch();
@@ -22,11 +23,12 @@ export const ProductTable = () => {
           <Form.Control type="text" placeholder="search by product name ..." />
         </div>
       </div>
-      <Table striped bordered hover>
+      <Table striped bordered hover className="text-start">
         <thead>
           <tr>
             <th>#</th>
             <th>Thumbnail</th>
+            <th>status</th>
             <th>Name</th>
             <th>QTY</th>
             <th>Edit</th>
@@ -36,17 +38,31 @@ export const ProductTable = () => {
           {products.map((item, i) => (
             <tr key={item._id}>
               <td>{i + 1}</td>
-              <td>no img</td>
-              <td>{item.name}</td>
+              <td>
+                <img
+                  src={
+                    process.env.REACT_APP_ROOTSERVER + item.thumbnail?.slice(6)
+                  }
+                  alt="img"
+                  width="150px"
+                />
+              </td>
+              <td>{item.status}</td>
+              <td>
+                <h3> {item.name}</h3>
+                Price: {item.price}
+              </td>
               <td>{item.qty}</td>
               <td>
-                <Button variant="warning">Edit</Button>
-                <Button
-                  variant="danger"
-                  onClick={() => dispatch(deleteProductAction(item._id))}
-                >
-                  Delete
-                </Button>
+                <Link to={`/product/edit/${item._id}`}>
+                  <Button variant="warning">Edit</Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => dispatch(deleteProductAction(item._id))}
+                  >
+                    Delete
+                  </Button>
+                </Link>
               </td>
             </tr>
           ))}

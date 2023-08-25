@@ -218,6 +218,16 @@ export const postNewProduct = (data) => {
   return axiosProcessor(obj);
 };
 
+export const updateProduct = (data) => {
+  const obj = {
+    method: "put",
+    url: productAPI,
+    obj: data,
+    isPrivate: true,
+  };
+  return axiosProcessor(obj);
+};
+
 export const getProducts = () => {
   const obj = {
     method: "get",
