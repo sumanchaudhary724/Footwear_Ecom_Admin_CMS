@@ -1,11 +1,13 @@
 import { toast } from "react-toastify";
 import {
   getAdminInfo,
+  getAdmins,
   getNewRefreshJWT,
   postNewAdmin,
   signInAdmin,
+  updateAdminProfile,
 } from "../../helper/axios";
-import { setAdmin } from "./adminSlice";
+import { setAdmin, setadminCollection } from "./adminSlice";
 
 export const createNewAdminAction = async (obj) => {
   const pendingResp = postNewAdmin(obj);
@@ -46,6 +48,26 @@ export const getAdminProfileAction = () => async (dispatch) => {
   if (status === "success") {
     dispatch(setAdmin(user));
   }
+};
+
+export const getAdminCollectionAction = () => async (dispatch) => {
+  //call the api to get user info
+  const { status, message, admins } = await getAdmins();
+  //mount the state with the user data
+  console.log(admins);
+  toast[status](message);
+  if (status === "success") {
+    dispatch(setadminCollection(admins));
+  }
+};
+
+// New action for updating admin profile
+export const updateProfileUser = (userObj) => async (dispatch) => {
+  const pendingResp = updateAdminProfile(userObj);
+  toast.promise(pendingResp, { Pending: "Please Wait" });
+  const { status, message } = await pendingResp;
+  toast[status](message);
+  dispatch(getAdminProfileAction());
 };
 
 export const autoLogin = () => async (dispatch) => {

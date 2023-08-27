@@ -15,7 +15,7 @@ const getRefreshJWT = () => {
 };
 
 // Assuming this function retrieves a new access JWT
-const getNewAccessJWT = async () => {
+export const getNewAccessJWT = async () => {
   try {
     // Make an API call or perform any other operation to get the new access JWT
     // For example:
@@ -80,6 +80,16 @@ export const getAdminInfo = () => {
   };
   return axiosProcessor(obj);
 };
+
+export const getAdmins = () => {
+  const obj = {
+    method: "get",
+    url: adminAPI + "/get-admins",
+    isPrivate: true,
+  };
+  return axiosProcessor(obj);
+};
+
 export const postNewAdmin = (data) => {
   const obj = {
     method: "post",
@@ -138,6 +148,7 @@ export const deleteCategory = (_id) => {
   const obj = {
     method: "delete",
     url: catAPI + "/" + _id,
+    isPrivate: true,
   };
   return axiosProcessor(obj);
 };
@@ -260,6 +271,16 @@ export const resetPass = (data) => {
     method: "post",
     url: adminAPI + "/reset-password",
     obj: data,
+  };
+  return axiosProcessor(obj);
+};
+
+export const updateAdminProfile = async (data) => {
+  const obj = {
+    method: "put",
+    url: adminAPI,
+    obj: data,
+    isPrivate: true,
   };
   return axiosProcessor(obj);
 };
