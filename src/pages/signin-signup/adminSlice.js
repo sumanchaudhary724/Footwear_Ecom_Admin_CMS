@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   admin: {},
-  updateProfileStatus: null, // Track the update profile status
+  adminList: [],
 };
 
 const adminSlice = createSlice({
@@ -14,12 +14,12 @@ const adminSlice = createSlice({
     setAdmin: (state, { payload }) => {
       state.admin = payload;
     },
-    setadminCollection: (state, { payload }) => {
-      state.adminCollection = payload;
+    setAdmins: (state, { payload }) => {
+      state.adminList = payload;
     },
   },
 });
 
-export const { setAdmin, setadminCollection } = adminSlice.actions;
+export const { setAdmin, setAdmins } = adminSlice.actions;
 
 export default adminSlice.reducer;

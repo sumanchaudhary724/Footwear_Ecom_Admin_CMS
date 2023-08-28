@@ -81,10 +81,10 @@ export const getAdminInfo = () => {
   return axiosProcessor(obj);
 };
 
-export const getAdmins = () => {
+export const getAdminDisplay = () => {
   const obj = {
     method: "get",
-    url: adminAPI + "/get-admins",
+    url: adminAPI + "/display",
     isPrivate: true,
   };
   return axiosProcessor(obj);
