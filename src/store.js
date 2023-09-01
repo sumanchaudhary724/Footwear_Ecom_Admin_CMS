@@ -4,6 +4,7 @@ import systemReducer from "./system/systemSlice";
 import adminReducer from "./pages/signin-signup/adminSlice";
 import opReducer from "./pages/payment-option/poSlice";
 import productReducer from "./pages/product/productSlice";
+import chartInfoReducer from "./pages/dashboard/chartInfoSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     adminInfo: adminReducer,
     poInfo: opReducer,
     productInfo: productReducer,
+    chartInfo: chartInfoReducer, // Include the chartInfo reducer
   },
 });

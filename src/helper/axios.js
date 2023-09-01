@@ -284,3 +284,23 @@ export const updateAdminProfile = async (data) => {
   };
   return axiosProcessor(obj);
 };
+
+// ============= Profile ============
+export const updataeProfile = (data) => {
+  const obj = {
+    method: "put",
+    url: adminAPI + "/profile",
+    obj: data,
+  };
+  console.log(data);
+  return axiosProcessor(obj);
+};
+
+export const updateProfilePassword = (data) => {
+  const obj = {
+    method: "put",
+    url: adminAPI + "/profilePassword",
+    obj: data,
+  };
+  return axiosProcessor(obj);
+};
