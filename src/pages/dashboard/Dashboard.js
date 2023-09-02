@@ -1,51 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useState } from "react";
+import { PieChart, Pie } from "recharts";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { useDispatch, useSelector } from "react-redux";
-import { setChartData } from "./chartInfoSlice.js";
-import { Bar } from "react-chartjs-2";
+import { useSelector } from "react-redux";
+import { RenderActiveShape } from "../../components/DashboardComponent/RenderActiveShape";
+
+const data = [
+  { name: "Darwin", value: 400 },
+  { name: "Brisbane", value: 100 },
+  { name: "Sydney", value: 200 },
+  { name: "Melbroune", value: 300 },
+  { name: "Tasmania", value: 250 },
+  { name: "Parth", value: 600 },
+  { name: "Adelaide", value: 150 },
+];
 
 export const Dashboard = () => {
-  const dispatch = useDispatch();
-  const chartData = useSelector((state) => state.chartInfo.chartData);
+  const { adminList } = useSelector((state) => state.adminInfo);
+  const { cats } = useSelector((state) => state.catInfo);
+  const { products } = useSelector((state) => state.productInfo);
+  console.log("From Dashboard: ", adminList, cats);
 
-  // Sample chart data (you can replace this with your actual data)
-  const sampleData = {
-    labels: ["Label 1", "Label 2", "Label 3"],
-    data: [10, 20, 15],
-  };
-
-  useEffect(() => {
-    // Dispatch an action to set the chart data (replace with actual data retrieval logic)
-    dispatch(setChartData(sampleData));
-  }, [dispatch]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const onPieEnter = useCallback(
+    (_, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
 
   return (
     <AdminLayout title="Dashboard">
-      <div className="chart-container">
-        <Bar
-          data={{
-            labels: chartData.labels,
-            datasets: [
-              {
-                label: "Chart Data",
-                data: chartData.data,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-              },
-            ],
-          }}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          }}
-        />
-      </div>
+      <main className="gap-2 d-grid">
+        <div className="topGraphInfo d-flex gap-3">
+          <div className="border shadow-lg p-3 rounded">
+            <p>{adminList.length} Admin found</p>
+          </div>
+          <div className="border shadow-lg p-3 rounded">
+            <p>{products.length} Product found</p>
+          </div>
+          <div className="border shadow-lg p-3 rounded">
+            <p>{cats.length} Category found</p>
+          </div>
+        </div>
+        <div className="mainGraphInfo">
+          <PieChart width={400} height={400}>
+            <Pie
+              activeIndex={activeIndex}
+              activeShape={<RenderActiveShape />}
+              data={data}
+              cx={200}
+              cy={200}
+              innerRadius={60}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+              onMouseEnter={onPieEnter}
+            ></Pie>
+          </PieChart>
+        </div>
+      </main>
     </AdminLayout>
   );
 };
