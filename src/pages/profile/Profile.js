@@ -7,6 +7,8 @@ import {
   updateProfileAction,
   updateProfilePasswordAction,
 } from "./profileAction";
+import { setModalShow } from "../../system/systemSlice"; // Import the action to set modal visibility
+import { CustomModal } from "../../components/customModal/customModal.js"; // Import the CustomModal component
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ export const Profile = () => {
 
   const [form, setForm] = useState({});
   const [passd, setPassd] = useState({});
+  const [showPasswordModal, setShowPasswordModal] = useState(false); // State to manage the password update modal
 
   const handleOnProfileChange = (e) => {
     const { value, name } = e.target;
@@ -69,6 +72,13 @@ export const Profile = () => {
       required: true,
     },
     {
+      label: "Phone",
+      name: "phone",
+      type: "text",
+      value: form?.phone,
+      required: true,
+    },
+    {
       label: "Email",
       name: "email",
       type: "text",
@@ -83,7 +93,7 @@ export const Profile = () => {
     },
   ];
 
-  const handleOnPassChange = (e) => {
+  const handleOnPasswordChange = (e) => {
     const { value, name } = e.target;
 
     setPassd({
@@ -94,28 +104,34 @@ export const Profile = () => {
 
   useEffect(() => {
     setForm(admin);
-  }, []);
+  }, [admin]);
 
-  const handleOnPforileSubmit = (e) => {
+  const handleOnProfileSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
     const { _id, fName, lName, address, email, password } = form;
-    updateProfileAction(_id, fName, lName, address, email, password);
-    // updateProfileAction(form)
+    dispatch(updateProfileAction(_id, fName, lName, address, email, password));
   };
 
   const handleOnPasswordSubmit = (e) => {
     e.preventDefault();
     if (passd.newPassword === passd.confirmPassword) {
       const { newPassword, currentPassword } = passd;
-      updateProfilePasswordAction(form._id, newPassword, currentPassword);
+      dispatch(
+        updateProfilePasswordAction(form._id, newPassword, currentPassword)
+      );
+      setShowPasswordModal(false); // Close the password update modal after submitting
     }
+  };
+
+  const handleOnChangePassword = (obj) => {
+    setShowPasswordModal(obj);
+    dispatch(setModalShow(true));
   };
 
   return (
     <div>
       <AdminLayout title="Profile">
-        <Form onSubmit={handleOnPforileSubmit}>
+        <Form onSubmit={handleOnProfileSubmit}>
           {inputs.map((item, i) => (
             <CustomInput key={i} {...item} onChange={handleOnProfileChange} />
           ))}
@@ -126,9 +142,22 @@ export const Profile = () => {
           </div>
         </Form>
         <hr />
+        <Button variant="primary" onClick={handleOnChangePassword}>
+          Change Password
+        </Button>
+      </AdminLayout>
+
+      {/* Password Update Modal */}
+      <CustomModal
+        title="Update Password"
+        show={showPasswordModal}
+        onHide={() => setShowPasswordModal(false)}
+      >
+        {/* Password update form */}
         <Form onSubmit={handleOnPasswordSubmit}>
+          {/* Password update form inputs */}
           {pass.map((item, i) => (
-            <CustomInput key={i} {...item} onChange={handleOnPassChange} />
+            <CustomInput key={i} {...item} onChange={handleOnPasswordChange} />
           ))}
           <div className="d-grid">
             <Button variant="primary" type="submit">
@@ -136,7 +165,7 @@ export const Profile = () => {
             </Button>
           </div>
         </Form>
-      </AdminLayout>
+      </CustomModal>
     </div>
   );
 };

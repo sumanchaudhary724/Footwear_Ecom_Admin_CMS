@@ -1,34 +1,43 @@
 import { toast } from "react-toastify";
-import { updataeProfile, updateProfilePassword } from "../../helper/axios";
+import { updateProfile, updateProfilePassword } from "../../helper/axios";
+import {
+  updateProfileSuccess,
+  updateProfileFailure,
+  updatePasswordSuccess,
+  updatePasswordFailure,
+} from "./profileSlice.js";
 
-export const updateProfileAction = (
-  _id,
-  fName,
-  lName,
-  address,
-  email,
-  password
-) => {
-  console.log(_id, fName, lName, address, email, password);
+// Update the profile with Redux state dispatch
+export const updateProfileAction = (formData) => {
+  return async (dispatch) => {
+    try {
+      // Make the HTTP request to update the profile using Axios
+      const response = await updateProfile(formData);
 
-  const pendData = updataeProfile({
-    _id,
-    fName,
-    lName,
-    address,
-    email,
-    password,
-  });
-  console.log("Profile Update: ", pendData);
+      // Assuming the response contains the updated profile data
+      dispatch(updateProfileSuccess(response.data));
+      toast.success("Profile updated successfully"); // Show a success toast
+    } catch (error) {
+      console.error("Profile Update Error:", error);
+      dispatch(updateProfileFailure(error));
+      toast.error("Failed to update profile"); // Show an error toast
+    }
+  };
 };
 
-export const updateProfilePasswordAction = async (
-  _id,
-  newPassword,
-  currentPassword
-) => {
-  console.log(_id, newPassword, currentPassword);
-  const pending = updateProfilePassword({ _id, newPassword, currentPassword });
+// Update the password with Redux state dispatch
+export const updateProfilePasswordAction = (formData) => {
+  return async (dispatch) => {
+    try {
+      // Make the HTTP request to update the password using Axios
+      await updateProfilePassword(formData);
 
-  console.log("Profile Password: ", pending);
+      dispatch(updatePasswordSuccess()); // No data is returned on success
+      toast.success("Password updated successfully"); // Show a success toast
+    } catch (error) {
+      console.error("Password Update Error:", error);
+      dispatch(updatePasswordFailure(error));
+      toast.error("Failed to update password"); // Show an error toast
+    }
+  };
 };

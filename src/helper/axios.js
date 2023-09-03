@@ -286,11 +286,12 @@ export const updateAdminProfile = async (data) => {
 };
 
 // ============= Profile ============
-export const updataeProfile = (data) => {
+export const updateProfile = (data) => {
   const obj = {
     method: "put",
     url: adminAPI + "/profile",
     obj: data,
+    isPrivate: true,
   };
   console.log(data);
   return axiosProcessor(obj);
