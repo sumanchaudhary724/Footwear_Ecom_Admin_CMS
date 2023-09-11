@@ -95,6 +95,8 @@ export const postNewAdmin = (data) => {
     method: "post",
     url: adminAPI,
     obj: data,
+    isPrivate: true,
+    refreshJWT: true,
   };
   return axiosProcessor(obj);
 };
@@ -111,6 +113,7 @@ export const postNewAdminVerificationInfo = (data) => {
     method: "post",
     url: adminAPI + "/admin-verification",
     obj: data,
+    isPrivate: true,
   };
   return axiosProcessor(obj);
 };
