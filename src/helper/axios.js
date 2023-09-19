@@ -242,15 +242,14 @@ export const updateProduct = (data) => {
   return axiosProcessor(obj);
 };
 
-export const getProducts = () => {
+export const getProducts = (_id) => {
   const obj = {
     method: "get",
-    url: productAPI,
+    url: _id ? productAPI + "/" + _id : productAPI,
     isPrivate: true,
   };
   return axiosProcessor(obj);
 };
-
 export const deleteProduct = (_id) => {
   const obj = {
     method: "delete",

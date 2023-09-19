@@ -49,13 +49,12 @@ const EditProduct = () => {
       disabled: true,
     },
     {
-      name: "sku",
-      label: "SKU",
+      name: "color",
+      label: "Color",
       type: "text",
-      placeholder: "SAM-TV-8",
+      placeholder: "Black",
       required: true,
-      value: form.sku,
-      disabled: true,
+      value: form.color,
     },
     {
       name: "qty",
@@ -120,7 +119,7 @@ const EditProduct = () => {
     });
   };
 
-  const handleOnImageAtached = (e) => {
+  const handleOnImageAttached = (e) => {
     const { files } = e.target;
     setImgs(files);
   };
@@ -140,6 +139,8 @@ const EditProduct = () => {
     //remove all the url form rest.images which matches the urls in imgToDelete
 
     rest.images = rest.images.filter((url) => !imgToDelete.includes(url));
+
+    console.log(rest);
 
     for (let key in rest) {
       formDt.append(key, rest[key]);
@@ -244,7 +245,7 @@ const EditProduct = () => {
               type="file"
               name="img"
               multiple
-              onChange={handleOnImageAtached}
+              onChange={handleOnImageAttached}
             />
           </Form.Group>
           <div className="d-grid mt-3 mb-3">
