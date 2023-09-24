@@ -5,6 +5,7 @@ import adminReducer from "./pages/signin-signup/adminSlice";
 import opReducer from "./pages/payment-option/poSlice";
 import productReducer from "./pages/product/productSlice";
 import profileReducer from "./pages/profile/profileSlice";
+import orderReducer from "./pages/order/orderSlice";
 export default configureStore({
   reducer: {
     catInfo: catReducer,
@@ -13,5 +14,6 @@ export default configureStore({
     poInfo: opReducer,
     productInfo: productReducer,
     profileInfo: profileReducer,
+    orderInfo: orderReducer,
   },
 });

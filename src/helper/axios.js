@@ -6,6 +6,7 @@ const catAPI = rootAPI + "/category";
 const poAPI = rootAPI + "/payment-option";
 const productAPI = rootAPI + "/product";
 const jwtAPI = rootAPI + "/get-new-access-jwt";
+const orderAPI = rootAPI + "/order";
 
 const getAccessJWT = () => {
   return sessionStorage.getItem("accessJWT");
@@ -304,6 +305,27 @@ export const updateProfilePassword = (data) => {
     method: "put",
     url: adminAPI + "/profilePassword",
     obj: data,
+  };
+  return axiosProcessor(obj);
+};
+
+//Orders
+
+export const getOrders = (_id) => {
+  const obj = {
+    method: "get",
+    url: _id ? orderAPI + "/" + _id : orderAPI,
+    isPrivate: true,
+  };
+  return axiosProcessor(obj);
+};
+
+export const updateOrder = (dataToUpd) => {
+  const obj = {
+    method: "put",
+    url: orderAPI,
+    obj: dataToUpd,
+    isPrivate: true,
   };
   return axiosProcessor(obj);
 };
