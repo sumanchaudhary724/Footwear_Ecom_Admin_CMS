@@ -19,7 +19,7 @@ export const Order = () => {
       ...item.payment,
       id: item._id,
       status: item.status,
-      isPaid: item.isPaid,
+      isPaid: item.payment.isPaid,
     };
   });
 
