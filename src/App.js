@@ -19,11 +19,15 @@ import { PrivateRoute } from "./components/private/PrivateRoute";
 import NewProduct from "./pages/product/NewProduct";
 import EditProduct from "./pages/product/EditProduct";
 import ResetPassword from "./pages/signin-signup/ResetPassword";
+import { getProductsAction } from "./pages/product/productAction";
+import { getAdminDisplayAction } from "./pages/signin-signup/adminAction";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getAdminDisplayAction());
     dispatch(getCatsAction());
+    dispatch(getProductsAction());
   }, [dispatch]);
   return (
     <div className="">

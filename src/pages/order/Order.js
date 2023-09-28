@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { useSelector } from "react-redux";
+import { getOrderAction } from "../../pages/order/orderAction";
 
 export const Order = () => {
+  const dispatch = useDispatch();
   const { orders } = useSelector((store) => store.orderInfo);
 
+  useEffect(() => {
+    // Dispatch the action to fetch orders when the component mounts
+    dispatch(getOrderAction());
+  }, [dispatch]);
+
   const rows = orders.map((item) => {
-    return { ...item.user, ...item.payment, id: item._id, status: item.status };
+    return {
+      ...item.user,
+      ...item.payment,
+      id: item._id,
+      status: item.status,
+      isPaid: item.isPaid,
+    };
   });
 
   return (
     <AdminLayout title="Orders">
-      <div className="container mt-4">
-        <div className="table-responsive">
-          <table className="table table-bordered">
+      <div className="mt-5">
+        <div className="d-flex justify-content-between mb-3">
+          <Table striped bordered hover className="text-start">
             <thead className="thead-light">
               <tr>
                 <th scope="col">Order ID</th>
@@ -32,11 +46,17 @@ export const Order = () => {
                   <td>{row.fName}</td>
                   <td>{row.totalAmount}</td>
                   <td>{row.method}</td>
-                  <td>{row.isPaid}</td>
+                  <td>
+                    {row.isPaid ? (
+                      <span style={{ color: "green" }}>Yes</span>
+                    ) : (
+                      <span style={{ color: "red" }}>No</span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       </div>
     </AdminLayout>
