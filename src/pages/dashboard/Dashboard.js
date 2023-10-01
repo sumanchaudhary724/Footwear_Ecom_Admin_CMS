@@ -1,8 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PieChart, Pie } from "recharts";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RenderActiveShape } from "../../components/DashboardComponent/RenderActiveShape";
+import { getAdminDisplayAction } from "../signin-signup/adminAction";
+import { getCatsAction } from "../category/categoryAction";
+import { getProductsAction } from "../product/productAction";
 
 const data = [
   { name: "Darwin", value: 400 },
@@ -15,6 +18,13 @@ const data = [
 ];
 
 export const Dashboard = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAdminDisplayAction());
+    dispatch(getCatsAction());
+    dispatch(getProductsAction());
+  }, [dispatch]);
+
   const { adminList } = useSelector((state) => state.adminInfo);
   const { cats } = useSelector((state) => state.catInfo);
   const { products } = useSelector((state) => state.productInfo);
