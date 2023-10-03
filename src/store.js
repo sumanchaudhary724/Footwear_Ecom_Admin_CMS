@@ -14,6 +14,5 @@ export default configureStore({
     poInfo: opReducer,
     productInfo: productReducer,
     profileInfo: profileReducer,
-    orderInfo: orderReducer,
   },
 });
