@@ -274,6 +274,8 @@ export const resetPass = (data) => {
     method: "post",
     url: adminAPI + "/reset-password",
     obj: data,
+    isPrivate: true,
+    refreshToken: true,
   };
   return axiosProcessor(obj);
 };
