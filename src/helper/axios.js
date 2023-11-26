@@ -106,6 +106,8 @@ export const signInAdmin = (data) => {
     method: "post",
     url: adminAPI + "/sign-in",
     obj: data,
+    isPrivate: true,
+    refreshJWT: true,
   };
   return axiosProcessor(obj);
 };
